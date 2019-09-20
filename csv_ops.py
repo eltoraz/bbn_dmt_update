@@ -1,5 +1,14 @@
 # csv_ops.py - read and write CSV data
 import csv
+import os
+
+def check_scratch(dir_name):
+    """Create the full tree to the specified path, if it doesn't already exist
+
+    dir_name: folder path (absolute or relative)
+    """
+    if not os.path.exists(dir_name):
+        os.makedirs(dir_name)
 
 def import_csv(filename):
     """Return a list of dicts containing the data read from the specified CSV files

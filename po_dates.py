@@ -15,6 +15,9 @@ csv = scratch_dir + baq + '.csv'            # DMT-exported CSV file
 new_csv = scratch_dir + 'PO_Detail.csv'     # CSV to re-import into DMT
 dmt_phase = 'Purchase Order Detail'         # DMT phase for the import step
 
+# check that the scratch directory exists, and create it if not
+csv_ops.check_scratch(scratch_dir)
+
 # export the BAQ to a CSV file
 dmt.dmt_export(baq, csv)
 
