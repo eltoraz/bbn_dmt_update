@@ -46,7 +46,8 @@ base_date = cal.get_date()
 new_data = []
 for row in data:
     # perform data transformations on each row from the exported dataset
-    pass        # delete this line when doing the actual data manipulations
+    new_row = {}
+    # other stuff
 
 # headers for the CSV file to import - make sure they match the mapping in the data manipulation above
 headers = []        # check the DMT template builder for the field names you need!
