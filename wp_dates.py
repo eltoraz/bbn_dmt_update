@@ -15,6 +15,9 @@ csv = scratch_dir + baq + '.csv'            # DMT-exported CSV file
 new_csv = scratch_dir + 'Job_Assembly.csv'  # CSV to re-import into DMT
 dmt_phase = 'Job Assembly'                  # DMT phase for the import step
 
+new_csv2 = scratch_dir + 'Job_Head.csv'     # need to run DMT import twice,
+dmt_phase2 = 'Job Header'                   #  unsetting the "new job" flag
+
 # check that the scratch directory exists, and create it if not
 csv_ops.check_scratch(scratch_dir)
 
@@ -41,6 +44,7 @@ base_date = cal.get_date()
 
 # do stuff to the data
 new_data = []
+new_data2 = []
 for row in data:
     # perform data transformations on each row from the exported dataset
     new_row = {}
@@ -50,12 +54,22 @@ for row in data:
     new_row['AssemblySeq'] = row['AssemblySeq']
     new_row['PartNum'] = row['PartNum']
     new_row['DueDate'] = (base_date + datetime.timedelta(days=int(row['Lead']))).strftime('%m/%d/%y')
+    
+    new_row2 = {}
+    new_row2['Company'] = row['Company']
+    new_row2['Plant'] = row['Plant']
+    new_row2['JobNum'] = row['JobNum']
+    new_row2['PartNum'] = row['PartNum']
+    new_row2['NewlyAdded_c'] = False
 
 # headers for the CSV file to import - make sure they match the mapping in the data manipulation above
 headers = ['Company', 'Plant', 'JobNum', 'AssemblySeq', 'PartNum', 'DueDate']
+headers2 = ['Company', 'Plant', 'JobNum', 'PartNum', 'NewlyAdded_c']
 
 # export the changes to a CSV file formatted for the specified DMT phase
 csv_ops.export_csv(headers, new_data, new_csv)
+csv_ops.export_csv(headers2, new_data2, new_csv2)
 
 # run DMT to import the changes into Epicor
 dmt.dmt_import(dmt_phase, new_csv)
+dmt.dmt_import(dmt_phase2, new_csv2)
