@@ -49,18 +49,20 @@ for row in data:
     # perform data transformations on each row from the exported dataset
     new_row = {}
     new_row['Company'] = row['Company']
-    new_row['Plant'] = row['Plant']
-    new_row['JobNum'] = row['JobNum']
-    new_row['AssemblySeq'] = row['AssemblySeq']
-    new_row['PartNum'] = row['PartNum']
+    new_row['Plant'] = row['Site']
+    new_row['JobNum'] = row['Job Number']
+    new_row['AssemblySeq'] = row['Asm']
+    new_row['PartNum'] = row['Part']
     new_row['DueDate'] = (base_date + datetime.timedelta(days=int(row['Lead']))).strftime('%m/%d/%y')
+    new_data.append(new_row)
     
     new_row2 = {}
     new_row2['Company'] = row['Company']
-    new_row2['Plant'] = row['Plant']
-    new_row2['JobNum'] = row['JobNum']
-    new_row2['PartNum'] = row['PartNum']
+    new_row2['Plant'] = row['Site']
+    new_row2['JobNum'] = row['Job Number']
+    new_row2['PartNum'] = row['Part']
     new_row2['NewlyAdded_c'] = False
+    new_data2.append(new_row2)
 
 # headers for the CSV file to import - make sure they match the mapping in the data manipulation above
 headers = ['Company', 'Plant', 'JobNum', 'AssemblySeq', 'PartNum', 'DueDate']
