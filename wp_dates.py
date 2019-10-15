@@ -53,6 +53,7 @@ for row in data:
     new_row['JobNum'] = row['Job Number']
     new_row['AssemblySeq'] = row['Asm']
     new_row['PartNum'] = row['Part']
+    new_row['StartDate'] = base_date.strftime('%m/%d/%y')
     new_row['DueDate'] = (base_date + datetime.timedelta(days=int(row['Lead']))).strftime('%m/%d/%y')
     new_data.append(new_row)
     
@@ -61,17 +62,20 @@ for row in data:
     new_row2['Plant'] = row['Site']
     new_row2['JobNum'] = row['Job Number']
     new_row2['PartNum'] = row['Part']
+    new_row2['JobEngineered'] = False
+    new_row2['JobReleased'] = False
+    new_row2['SchedLocked'] = True
     new_row2['NewlyAdded_c'] = False
     new_data2.append(new_row2)
 
 # headers for the CSV file to import - make sure they match the mapping in the data manipulation above
-headers = ['Company', 'Plant', 'JobNum', 'AssemblySeq', 'PartNum', 'DueDate']
-headers2 = ['Company', 'Plant', 'JobNum', 'PartNum', 'NewlyAdded_c']
+headers = ['Company', 'Plant', 'JobNum', 'AssemblySeq', 'PartNum', 'StartDate', 'DueDate']
+headers2 = ['Company', 'Plant', 'JobNum', 'PartNum', 'JobEngineered', 'JobReleased', 'SchedLocked', 'NewlyAdded_c']
 
 # export the changes to a CSV file formatted for the specified DMT phase
 csv_ops.export_csv(headers, new_data, new_csv)
 csv_ops.export_csv(headers2, new_data2, new_csv2)
 
 # run DMT to import the changes into Epicor
+dmt.dmt_import(dmt_phase2, new_csv2)        # need to update job header first
 dmt.dmt_import(dmt_phase, new_csv)
-dmt.dmt_import(dmt_phase2, new_csv2)
