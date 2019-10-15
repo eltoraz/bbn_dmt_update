@@ -3,3 +3,5 @@ dist/
 scratch/
 *.spec
 __pycache__/
+
+pyinstaller_command.txt
