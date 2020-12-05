@@ -43,8 +43,8 @@ def correct_po_dates(base_date):
         curr_po = int(row['PO'])
         if curr_po not in pos:
             pos.add(curr_po)
-            pre_row = {'Company': row['Company'], 'PONum': curr_po, 'Approve': False}
-            post_row = {'Company': row['Company'], 'PONum': curr_po, 'Approve': True}
+            pre_row = {'Company': row['Company'], 'PONum': curr_po, 'VendorVendorID': row['Supplier ID'], 'Approve': False}
+            post_row = {'Company': row['Company'], 'PONum': curr_po, 'VendorVendorID': row['Supplier ID'], 'Approve': True}
             hdr_pre.append(pre_row)
             hdr_post.append(post_row)
 
@@ -72,7 +72,7 @@ def correct_po_dates(base_date):
     log.log('po post size:' + str(len(hdr_post)))
 
     # headers for the CSV file to import - make sure they match the mapping in the data manipulation above
-    hdr_headers = ['Company', 'PONum', 'Approve']
+    hdr_headers = ['Company', 'PONum', 'VendorVendorID', 'Approve']
     headers = ['Company', 'PONum', 'POLine', 'DueDate']
     rel_headers = ['Company', 'PONum', 'POLine', 'PORelNum', 'DueDate']
 
