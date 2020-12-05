@@ -1,0 +1,4 @@
+Simple script to export data from Epicor database using an in-application query and the Data Management Tool, make several modifications to scheduled dates, and re-import the rows.
+Contains a template to base operations on, a version for purchase orders, and one for created jobs- as well as a script to call both to tie the purchase order dates to the due date for the job.
+
+Created to make up for deficiencies in Epicor ERP's scheduler- it made more sense to develop this tool to preserve the current company workflow than either fiddling with Epicor's tools (which we were less familiar with) or changing ingrained operating procedures.
